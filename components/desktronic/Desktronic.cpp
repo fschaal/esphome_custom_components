@@ -215,7 +215,15 @@ void Desktronic::read_desk_uart()
 
         is_desk_rx_uart_message_start_found = false;
         uint8_t* data = desk_buffer_.data();
-
+        // Temporary string to hold the log message
+        char log_message[100];
+        
+        // Format the data array into the log_message string
+        sprintf(log_message, "Data array received at uart: [%02x, %02x, %02x, %02x, %02x]", data[0], data[1], data[2], data[3], data[4]);
+        
+        // Use ESP_LOGE to log the message
+        ESP_LOGE(TAG, "%s", log_message);
+        
         const uint8_t checksum = data[0] + data[1] + data[2] + data[3];
         if (checksum != data[4])
         {
