@@ -216,24 +216,6 @@ void Desktronic::read_desk_uart()
         is_desk_rx_uart_message_start_found = false;
         uint8_t* data = desk_buffer_.data();
 
-        
-        const uint8_t checksum = data[0] + data[1] + data[2] + data[3];
-        if (checksum != data[4])
-        {
-            // Temporary string to hold the log message
-            char log_message[100];
-            
-            // Format the data array into the log_message string
-            sprintf(log_message, "Data array received at uart: [%02x, %02x, %02x, %02x, %02x]", data[0], data[1], data[2], data[3], data[4]);
-            
-            // Use ESP_LOGE to log the message
-            ESP_LOGE(TAG, "%s", log_message);
-            ESP_LOGE(TAG, "desk checksum mismatch: %02x (calculated checksum) != %02x (actual checksum)", checksum, data[4]);
-            reset_desk_buffer();
-
-            continue;
-        }
-
         if (height_sensor_)
         {
             if (data[3] != 0x01)
