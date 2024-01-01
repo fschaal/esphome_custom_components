@@ -356,6 +356,20 @@ void Desktronic::move_to_target_height()
     }
 }
 
+void Desktronic::move_up() {
+    // Implementation logic here
+    // For example, sending a UART command to move the desk up
+    remote_uart_->write_array(REMOTE_UART_MESSAGE_MOVE_UP, REMOTE_UART_MESSAGE_LENGTH);
+    current_operation = DESKTRONIC_OPERATION_RAISING;
+}
+
+void Desktronic::move_down() {
+    // Implementation logic here
+    // For example, sending a UART command to move the desk down
+    remote_uart_->write_array(REMOTE_UART_MESSAGE_MOVE_DOWN, REMOTE_UART_MESSAGE_LENGTH);
+    current_operation = DESKTRONIC_OPERATION_LOWERING;
+}
+
 bool Desktronic::isCurrentHeightValid() const
 {
     return (current_height_ >= MIN_HEIGHT) || (current_height_ <= MAX_HEIGHT);
